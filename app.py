@@ -2,6 +2,7 @@
 
 from flask import Flask, request, render_template, send_from_directory
 import os
+import sys
 from PIL import Image
 
 app = Flask(__name__)
@@ -138,7 +139,7 @@ def crop():
     # crop image and show
     if crop_possible:
         img = img.crop((x1, y1, x2, y2))
-        
+
         # save and return image
         destination = "/".join([target, 'temp.png'])
         if os.path.isfile(destination):
@@ -180,7 +181,35 @@ def blend():
     # blend and show image
     img = Image.blend(img1, img2, float(alpha)/100)
 
-     # save and return image
+    # save and return image
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
+
+# White to Trasnparent
+
+
+@app.route("/whitetotransparent", methods=["POST"])
+def whitetotransparent():
+    filename = request.form['image']
+    # open and process image
+    target = os.path.join(APP_ROOT, 'static/images')
+    destination = "/".join([target, filename])
+
+    img = Image.open(destination)
+    img.convert('RGBA')
+    datas = img.getdata()
+    newData = []
+    for item in datas:
+	    if item[0] == 255 and item[1] == 255 and item[2] == 255:
+	        newData.append((255, 255, 255, 0))
+	    else:
+	        newData.append(item)
+    img.putdata(newData)
+    # save and return image
     destination = "/".join([target, 'temp.png'])
     if os.path.isfile(destination):
         os.remove(destination)
@@ -197,4 +226,3 @@ def send_image(filename):
 
 if __name__ == "__main__":
     app.run()
-

@@ -161,7 +161,24 @@ def blend(alpha, filename1, filename2):
 
     return send_image('temp.png')
 
+@app.route("/whitetotransparent/<filename>", methods=["POST"])
+def whitetotransparent(filename):
+    filename = request.form['image']
 
+    # open and process image
+    target = os.path.join(APP_ROOT, 'static/images')
+    destination = "/".join([target, filename])
+
+    img = Image.open(destination)
+    img = img.rotate(90)
+
+    # save and return image
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
 # retrieve file from 'static/images' directory
 @app.route('/static/images/<filename>')
 def send_image(filename):

@@ -21,7 +21,7 @@
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation" class="active"><a href="/">Home</a>
                     </li>
-                    <li role="presentation"><a href="https://github.com/gxercavins">gxercavins</a>
+                    <li role="presentation"><a href="https://github.com/kmerkuri">kmerkuri</a>
                     </li>
                 </ul>
             </nav>
@@ -52,7 +52,16 @@
                   <input type="number" placeholder="y2" min="0" name="y2" required>                                
                   <button id="btnCrop" class="btn btn-lg btn-success" type="submit">Go</button>
 			  <input type="text" class="hidden" name="image" value="{{ image_name }}">
-                </form>                
+                </form> 
+
+
+                <h4>White to Transparent</h4>
+                <form id="form-whitetotransparent" action="{{ url_for('whitetotransparent') }}" method="POST" enctype="multipart/form-data">
+                    <button id="whitetotransparent" class="btn btn-lg btn-success" type="submit">Convert to Transparent</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form>            
+                
+
             </div>
  
             <div class="col-lg-6">
@@ -74,7 +83,7 @@
         </div>
  
         <footer class="footer">
-            <p>&copy; gxercavins 2017. Using Python, Flask and PIL.</p>
+            <p>&copy; Klevi Merkuri 2020. Using Python, Flask and PIL.</p>
         </footer>
  
     </div>
