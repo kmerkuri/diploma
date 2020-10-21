@@ -79,6 +79,13 @@
 	  	       <input type="text" class="hidden" name="image" value="{{ image_name }}">
                 </form>
                 
+                <h4>Simple Geometry Transforms</h4>
+                <form id="form-simplegeometry" action="{{ url_for('simplegeometry') }}" method="POST" enctype="multipart/form-data">
+                    <input type="number" placeholder="x1" min="0" name="x1" required>  
+                    <input type="number" placeholder="x2" min="0" name="x2" required>                                               
+                    <button id="btnsimplegeometry" class="btn btn-lg btn-success" type="submit">Go</button>
+                <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                  </form> 
             </div>
         </div>
  

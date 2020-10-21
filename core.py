@@ -179,6 +179,22 @@ def whitetotransparent(filename):
     img.save(destination)
 
     return send_image('temp.png')
+@app.route("/simplegeometry/<x1>/<x2>/<filename>", methods=["POST"])
+def simplegeometry(x1,x2,filename):
+    filename = request.form['image']
+    x1 = int(request.form['x1'])
+    x2 = int(request.form['x2'])
+    [x1,x2] = [int(x1), int(x2)]
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    img.resize((x1,x2))
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
 # retrieve file from 'static/images' directory
 @app.route('/static/images/<filename>')
 def send_image(filename):
