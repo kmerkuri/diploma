@@ -61,7 +61,26 @@
                     <input type="text" class="hidden" name="image" value="{{ image_name }}">
                 </form>            
                 
-
+                <h4>Adjust Image Color Balance</h4>
+                <form id="form-colorbalace" action="{{ url_for('colorbalance') }}" method="POST" enctype="multipart/form-data">
+                    <button id="colorbalance" class="btn btn-lg btn-success" type="submit">Adjust Color Balance</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
+                <h4>Enhance Sharpness</h4>
+                <form id="form-sharpness" action="{{ url_for('enhancesharpness') }}" method="POST" enctype="multipart/form-data">
+                    <button id="colorbalance" class="btn btn-lg btn-success" type="submit">Enhance Sharpness</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
+                <h4>Convert to Black and White</h4>
+                <form id="form-blackandwhite" action="{{ url_for('blackandwhite') }}" method="POST" enctype="multipart/form-data">
+                    <button id="blackandwhite" class="btn btn-lg btn-success" type="submit">Black And White</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
+                <h4>Conver to Negative</h4>
+                <form id="form-negative" action="{{ url_for('negative') }}" method="POST" enctype="multipart/form-data">
+                    <button id="negative" class="btn btn-lg btn-success" type="submit">Convert to negative</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
             </div>
  
             <div class="col-lg-6">
@@ -86,6 +105,21 @@
                     <button id="btnsimplegeometry" class="btn btn-lg btn-success" type="submit">Go</button>
                 <input type="text" class="hidden" name="image" value="{{ image_name }}">
                   </form> 
+                  <h4>Enhance Contrast</h4>
+                  <form id="form-contrast" action="{{ url_for('enhancecontrast') }}" method="POST" enctype="multipart/form-data">
+                    <button id="colorcontrast" class="btn btn-lg btn-success" type="submit">Enhance Sharpness</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
+                  <h4>Enhance Brightness</h4>
+                  <form id="form-brightness" action="{{ url_for('enhancebrightness') }}" method="POST" enctype="multipart/form-data">
+                    <button id="colorbrightness" class="btn btn-lg btn-success" type="submit">Enhance Brightness</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
+                  <h4>Convert to GrayScale</h4>
+                  <form id="form-grayscale" action="{{ url_for('grayscale') }}" method="POST" enctype="multipart/form-data">
+                    <button id="grayscale" class="btn btn-lg btn-success" type="submit">Conver to GrayScale</button>
+                    <input type="text" class="hidden" name="image" value="{{ image_name }}">
+                </form> 
             </div>
         </div>
  
