@@ -3,7 +3,7 @@
 from flask import Flask, request, render_template, send_from_directory
 import os
 import sys
-from PIL import Image
+from PIL import Image, ImageEnhance, ImageTk, ImageFilter
 
 app = Flask(__name__)
 
@@ -233,7 +233,133 @@ def simplegeometry():
     img.save(destination)
 
     return send_image('temp.png')
+@app.route("/colorbalance", methods=["POST"])
+def colorbalance():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    enhancer = ImageEnhance.Color(img)
+    for i in range(8):
+        factor = i / 4.0
+        enhancer.enhance(factor) 
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
 
+    return send_image('temp.png')
+@app.route("/enhancesharpness", methods=["POST"])
+def enhancesharpness():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    enhancer = ImageEnhance.Sharpness(img)
+    for i in range(8):
+        factor = i / 4.0
+        enhancer.enhance(factor) 
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
+@app.route("/enhancecontrast", methods=["POST"])
+def enhancecontrast():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    enhancer = ImageEnhance.Contrast(img)
+    for i in range(30):
+        factor = i / 4.0
+        enhancer.enhance(factor) 
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
+@app.route("/enhancebrightness", methods=["POST"])
+def enhancebrightness():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    enhancer = ImageEnhance.Brightness(img)
+    for i in range(8):
+        factor = i / 4.0
+        enhancer.enhance(factor) 
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
+@app.route("/blackandwhite", methods=["POST"])
+def blackandwhite():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    thresh = 200
+    fn = lambda x : 255 if x > thresh else 0
+    r = img.convert('L').point(fn, mode='1') 
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    r.save(destination)
+
+    return send_image('temp.png')
+@app.route("/negative", methods=["POST"])
+def negative():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    for i in range(0, img.size[0]-1):
+
+        for j in range(0, img.size[1]-1):
+
+        # Get pixel value at (x,y) position of the image
+
+            pixelColorVals = img.getpixel((i,j));
+
+       
+
+        # Invert color
+
+            redPixel    = 255 - pixelColorVals[0]; # Negate red pixel
+
+            greenPixel  = 255 - pixelColorVals[1]; # Negate green pixel
+
+            bluePixel   = 255 - pixelColorVals[2]; # Negate blue pixel
+
+                   
+
+        # Modify the image with the inverted pixel values
+
+            img.putpixel((i,j),(redPixel, greenPixel, bluePixel))
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    img.save(destination)
+
+    return send_image('temp.png')
+@app.route("/grayscale", methods=["POST"])
+def grayscale():
+    filename = request.form['image']
+    target = os.path.join(APP_ROOT,'static/images')
+    destination = "/".join([target,filename])
+    img = Image.open(destination)
+    grayscale = img.convert("L")
+    destination = "/".join([target, 'temp.png'])
+    if os.path.isfile(destination):
+        os.remove(destination)
+    grayscale.save(destination)
+
+    return send_image('temp.png')
 # retrieve file from 'static/images' directory
 @app.route('/static/images/<filename>')
 def send_image(filename):
